@@ -36,36 +36,41 @@
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
-    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
-    <div id="header-group">
-      {% sections 'header-group' %}
-    </div>
-
-    <main
-      id="MainContent"
-      class="content-for-layout"
-      role="main"
-      data-page-transition-enabled="{{ settings.page_transition_enabled }}"
-      data-product-transition="{{ settings.transition_to_main_product }}"
-      data-template="{{ template }}"
-    >
-      {{ content_for_layout }}
-    </main>
-
-    {% sections 'footer-group' %}
-
-    {% render 'search-modal' %}
-
-    {% # theme-check-disable ParserBlockingScript %}
-    <script src="{{ 'critical.js' | asset_url }}"></script>
-    {% # theme-check-enable ParserBlockingScript %}
-
-    {% if settings.quick_add or settings.mobile_quick_add %}
-      {% render 'quick-add-modal' %}
-    {% endif %}
-
+    {%- comment -%} Added conditional display logic based on danncassab variable {%- endcomment -%}
+    {%- assign danncassab = 1 -%}  {%- comment -%} <-- HERE IS THE ASSIGNING CONSTANT {%- endcomment -%}
     
-    {{ 'decimals-overdrive.js' | asset_url | script_tag }}
+    {%- if danncassab == 1 -%}
+      {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+      <div id="header-group">
+        {% sections 'header-group' %}
+      </div>
+
+      <main
+        id="MainContent"
+        class="content-for-layout"
+        role="main"
+        data-page-transition-enabled="{{ settings.page_transition_enabled }}"
+        data-product-transition="{{ settings.transition_to_main_product }}"
+        data-template="{{ template }}"
+      >
+        {{ content_for_layout }}
+      </main>
+
+      {% sections 'footer-group' %}
+
+      {% render 'search-modal' %}
+
+      {% # theme-check-disable ParserBlockingScript %}
+      <script src="{{ 'critical.js' | asset_url }}"></script>
+      {% # theme-check-enable ParserBlockingScript %}
+
+      {% if settings.quick_add or settings.mobile_quick_add %}
+        {% render 'quick-add-modal' %}
+      {% endif %}
+
+      
+      {{ 'decimals-overdrive.js' | asset_url | script_tag }}
+    {%- endif -%}
 
   </body>
 </html>
